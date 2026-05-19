@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Bank Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: #2c3e50;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-welcome {
+            color: white;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 18px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 15px;
+        }
+
+        .message {
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px auto;
+            max-width: 500px;
+        }
+
+        .menu-card {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: left;
+            text-decoration: none;
+            color: #2c3e50;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-card:hover {
+            border-color: #3498db;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .menu-card .icon {
+            width: 50px;
+            height: 50px;
+            background: #ecf0f1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .menu-card.create .icon { background: #d5f4e6; color: #27ae60; }
+        .menu-card.deposit .icon { background: #d6eaf8; color: #3498db; }
+        .menu-card.withdraw .icon { background: #fadbd8; color: #e74c3c; }
+        .menu-card.balance .icon { background: #f9e79f; color: #f39c12; }
+        .menu-card.modify .icon { background: #d5dbdb; color: #34495e; }
+        .menu-card.view .icon { background: #e8daef; color: #8e44ad; }
+        .menu-card.close .icon { background: #f5b7b1; color: #c0392b; }
+
+        .menu-card h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .menu-card p {
+            font-size: 13px;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+
+        .card-text {
+            flex: 1;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px 0;
+            border-top: 1px solid #e0e0e0;
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-grid {
+                max-width: 100%;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            .menu-card {
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-card {
+                gap: 15px;
+            }
+
+            .menu-card .icon {
+                width: 45px;
+                height: 45px;
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-content">
+            <div class="nav-left">
+                <span class="nav-logo">Bank</span>
+                <span class="nav-title">Management System</span>
+            </div>
+            <div class="nav-right">
+                <span class="user-welcome">Welcome, {{ username }}</span>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Dashboard</h1>
+            <p class="subtitle">Choose a service to get started</p>
+        </header>
+
+        {% if success %}
+        <div class="message success">{{ success }}</div>
+        {% endif %}
+
+        <div class="menu-grid">
+            <a href="{{ url_for('create_account') }}" class="menu-card create">
+                <div class="icon">+</div>
+                <div class="card-text">
+                    <h3>Create Account</h3>
+                    <p>Open a new bank account</p>
+                </div>
+            </a>
+
+            <a href="{{ url_for('deposit') }}" class="menu-card deposit">
+                <div class="icon">↓</div>
+                <div class="card-text">
+                    <h3>Deposit Money</h3>
+                    <p>Add funds to your account</p>
+                </div>
+            </a>
+
+            <a href="{{ url_for('withdraw') }}" class="menu-card withdraw">
+                <div class="icon">↑</div>
+                <div class="card-text">
+                    <h3>Withdraw Money</h3>
+                    <p>Withdraw from account</p>
+                </div>
+            </a>
+
+            <a href="{{ url_for('balance') }}" class="menu-card balance">
+                <div class="icon">₹</div>
+                <div class="card-text">
+                    <h3>Check Balance</h3>
+                    <p>View account balance</p>
+                </div>
+            </a>
+
+            <a href="{{ url_for('modify') }}" class="menu-card modify">
+                <div class="icon">✎</div>
+                <div class="card-text">
+                    <h3>Modify Account</h3>
+                    <p>Update account information</p>
+                </div>
+            </a>
+
+            <a href="{{ url_for('all_accounts') }}" class="menu-card view">
+                <div class="icon">≡</div>
+                <div class="card-text">
+                    <h3>All Accounts</h3>
+                    <p>View all registered accounts</p>
+                </div>
+            </a>
+
+            <a href="{{ url_for('close_account') }}" class="menu-card close">
+                <div class="icon">×</div>
+                <div class="card-text">
+                    <h3>Close Account</h3>
+                    <p>Permanently delete an account</p>
+                </div>
+            </a>
+        </div>
+
+        <footer>
+            <p>© 2025 Bank Management System - Secure Banking Solution</p>
+        </footer>
+    </div>
+</body>
+</html>
