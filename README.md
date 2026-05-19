@@ -1,4 +1,4 @@
-# 🏦 Bank Management System
+# 🏦 Bank Management System using Python Flask
 
 A comprehensive web-based banking application built with Python Flask for managing bank accounts and transactions.
 
